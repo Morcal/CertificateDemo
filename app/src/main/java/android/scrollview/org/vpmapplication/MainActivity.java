@@ -33,12 +33,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.text);
-        try {
-            // 加载本地证书
-            LoadCar();
-        } catch (CertificateException e) {
-            e.printStackTrace();
+        Constant.isInstall();
+        if (!Constant.isLoadCaer) {
+            try {
+                // 加载本地证书
+                LoadCar();
+            } catch (CertificateException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     public void LoadCar() throws CertificateException {
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 textView.setText("安装成功");
+                Constant.isLoadCaer = true;
             }
         }
     }
